@@ -13,7 +13,7 @@ const parseDate = str => {
   };
 };
 
-const EventDetailModal = ({event, comments, opened, onClose}) => {
+const NewEventModal = ({event, comments, opened, onClose}) => {
   return (
     <>
       <Modal
@@ -72,4 +72,4 @@ const EventDetailModal = ({event, comments, opened, onClose}) => {
   );
 }
 
-export default EventDetailModal;
+export default NewEventModal;

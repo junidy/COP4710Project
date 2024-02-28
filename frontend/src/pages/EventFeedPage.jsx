@@ -1,10 +1,14 @@
 import testEvents from '../utils/testEvents.json';
-import normalizeFeedJson from '../utils/normalizeFeedJson.js';
 import { AppShell, Center, Group, Stack, Text, Title } from '@mantine/core';
 import EventEntry from '../components/EventEntry';
+import fetchEvents from '../utils/fetchEvents';
+import { useEffect, useState } from 'react';
 
 const EventFeedPage = () => {
-    let events = testEvents.map(event => normalizeFeedJson(event));
+    const [events, setEvents] = useState([]);
+    useEffect(() => {
+      fetchEvents().then(arr => setEvents(arr));
+    }, []);
     return (
       <AppShell
         header={{height: 80}}
@@ -19,7 +23,7 @@ const EventFeedPage = () => {
         <AppShell.Main>
           <Stack>
             {
-              events.map(event => <EventEntry event={event} key={event.event_id} />)
+              events ? events.map(event => <EventEntry event={event} key={event.event_id} />) : null
             }
           </Stack>
         </AppShell.Main>
