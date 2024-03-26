@@ -20,7 +20,7 @@ const EventDetailModal = ({event, comments, opened, onClose}) => {
         opened={opened}
         onClose={onClose}
         title={<>
-          <Title order={2}>{event.title}</Title>
+          <Text order={2}>{event.title}</Text>
           <Group>
             <Text>{parseDate(event.time.start).date} from {parseDate(event.time.start).time} to {parseDate(event.time.end).time}</Text>
           </Group>

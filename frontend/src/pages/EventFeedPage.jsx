@@ -21,11 +21,13 @@ const EventFeedPage = () => {
             </Center>
         </AppShell.Header>
         <AppShell.Main>
-          <Stack>
-            {
-              events ? events.map(event => <EventEntry event={event} key={event.event_id} />) : null
-            }
-          </Stack>
+          <Center>
+            <Stack>
+              {
+                events ? events.map(event => <EventEntry event={event} key={event.event_id} />) : null
+              }
+            </Stack>
+          </Center>
         </AppShell.Main>
       </AppShell>
     );
