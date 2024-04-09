@@ -45,7 +45,10 @@ CREATE TABLE `events` (
   `description` varchar(2500) NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
-  `location_id` char(20) NOT NULL,
+  `location_id` varchar(50) NOT NULL,
+  `contact_name` varchar(50) NOT NULL,
+  `contact_phone` varchar(14) NOT NULL,
+  `contact_email` varchar(75) NOT NULL,
   PRIMARY KEY (`event_id`),
   UNIQUE KEY `event_id_UNIQUE` (`event_id`),
   KEY `fk_events_location_location_id_idx` (`location_id`),
@@ -93,14 +96,17 @@ CREATE TABLE `feedback` (
   `event_id` char(20) NOT NULL,
   `user_id` varchar(20) NOT NULL,
   `comment` varchar(500) DEFAULT NULL,
-  `rating` decimal(10,0) NOT NULL,
+  `rating` int NOT NULL,
   `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`feedback_id`),
   UNIQUE KEY `feedback_id_UNIQUE` (`feedback_id`),
   KEY `fk_feedback_events_event_id_idx` (`event_id`),
   KEY `fk_feedback_users_user_id_idx` (`user_id`),
   CONSTRAINT `fk_feedback_events_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`location_id`),
-  CONSTRAINT `fk_feedback_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `fk_feedback_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `rating_range` check (
+    `rating` BETWEEN 1 AND 5
+  )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -112,13 +118,13 @@ DROP TABLE IF EXISTS `locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `locations` (
-  `location_ID` char(20) NOT NULL,
+  `location_id` varchar(50) NOT NULL,
   `name` varchar(45) NOT NULL,
   `desc` varchar(100) DEFAULT NULL,
   `address` varchar(150) NOT NULL,
   `maps_url` varchar(2048) DEFAULT NULL,
-  PRIMARY KEY (`location_ID`),
-  UNIQUE KEY `location_ID_UNIQUE` (`location_ID`)
+  PRIMARY KEY (`location_id`),
+  UNIQUE KEY `location_id_UNIQUE` (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -304,6 +310,7 @@ DROP TABLE IF EXISTS `rsos`;
 CREATE TABLE `rsos` (
   `rso_id` char(20) NOT NULL,
   `admin_id` varchar(20) NOT NULL,
+  `name` varchar(50) NOT NULL,
   PRIMARY KEY (`rso_id`),
   UNIQUE KEY `rso_id_UNIQUE` (`rso_id`),
   KEY `fk_rsos_admins_admin_id_idx` (`admin_id`),
@@ -335,12 +342,12 @@ DROP TABLE IF EXISTS `universities`;
 CREATE TABLE `universities` (
   `university_id` char(20) NOT NULL,
   `name` varchar(75) DEFAULT NULL,
-  `location_id` char(20) DEFAULT NULL,
+  `location_id` varchar(50) DEFAULT NULL,
   `super_admin_id` varchar(20) NOT NULL,
   PRIMARY KEY (`university_id`),
   KEY `fk_universities_locations_location_id_idx` (`location_id`),
   KEY `fk_universities_super_admin_super_admin_id_idx` (`super_admin_id`),
-  CONSTRAINT `fk_universities_locations_location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_ID`),
+  CONSTRAINT `fk_universities_locations_location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`),
   CONSTRAINT `fk_universities_super_admin_super_admin_id` FOREIGN KEY (`super_admin_id`) REFERENCES `super_admins` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
