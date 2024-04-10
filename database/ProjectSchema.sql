@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `admins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admins` (
-  `user_id` varchar(20) NOT NULL,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_admin_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
-  `event_id` char(6) NOT NULL,
+  `event_id` int NOT NULL AUTO_INCREMENT,
   `creator_id` varchar(20) NOT NULL,
   `tags` varchar(250) DEFAULT NULL,
   `title` varchar(100) NOT NULL,
@@ -51,9 +51,7 @@ CREATE TABLE `events` (
   `contact_email` varchar(75) NOT NULL,
   PRIMARY KEY (`event_id`),
   UNIQUE KEY `event_id_UNIQUE` (`event_id`),
-  KEY `fk_events_location_location_id_idx` (`location_id`),
   KEY `fk_events_users_creator_id_idx` (`creator_id`),
-  CONSTRAINT `fk_events_locations_location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_ID`),
   CONSTRAINT `fk_events_users_creator_id` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -92,7 +90,7 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `feedback` (
-  `feedback_id` char(20) NOT NULL,
+  `feedback_id` int NOT NULL AUTO_INCREMENT,
   `event_id` char(20) NOT NULL,
   `user_id` varchar(20) NOT NULL,
   `comment` varchar(500) DEFAULT NULL,
@@ -102,29 +100,11 @@ CREATE TABLE `feedback` (
   UNIQUE KEY `feedback_id_UNIQUE` (`feedback_id`),
   KEY `fk_feedback_events_event_id_idx` (`event_id`),
   KEY `fk_feedback_users_user_id_idx` (`user_id`),
-  CONSTRAINT `fk_feedback_events_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`location_id`),
+  CONSTRAINT `fk_feedback_events_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`),
   CONSTRAINT `fk_feedback_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `rating_range` check (
     `rating` BETWEEN 1 AND 5
   )
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locations`
---
-
-DROP TABLE IF EXISTS `locations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `locations` (
-  `location_id` varchar(50) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `desc` varchar(100) DEFAULT NULL,
-  `address` varchar(150) NOT NULL,
-  `maps_url` varchar(2048) DEFAULT NULL,
-  PRIMARY KEY (`location_id`),
-  UNIQUE KEY `location_id_UNIQUE` (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,7 +116,7 @@ DROP TABLE IF EXISTS `private_events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `private_events` (
-  `event_id` char(6) NOT NULL,
+  `event_id` int NOT NULL AUTO_INCREMENT,
   `university_id` char(20) NOT NULL,
   PRIMARY KEY (`event_id`),
   KEY `fk_private_events_universities_university_id_idx` (`university_id`),
@@ -197,7 +177,7 @@ DROP TABLE IF EXISTS `rso_events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rso_events` (
-  `event_id` char(6) NOT NULL,
+  `event_id` int char(6) NOT NULL AUTO_INCREMENT,
   `rso_id` char(20) NOT NULL,
   PRIMARY KEY (`event_id`),
   KEY `fk_rso_events_rsos_rso_id_idx` (`rso_id`),
@@ -238,7 +218,7 @@ DROP TABLE IF EXISTS `rso_members`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rso_members` (
-  `membership_id` int NOT NULL,
+  `membership_id` int NOT NULL AUTO_INCREMENT,
   `member_id` varchar(20) DEFAULT NULL,
   `rso_id` char(20) DEFAULT NULL,
   PRIMARY KEY (`membership_id`),
@@ -308,7 +288,7 @@ DROP TABLE IF EXISTS `rsos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rsos` (
-  `rso_id` char(20) NOT NULL,
+  `rso_id` int NOT NULL AUTO_INCREMENT,
   `admin_id` varchar(20) NOT NULL,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`rso_id`),
@@ -326,7 +306,7 @@ DROP TABLE IF EXISTS `super_admins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `super_admins` (
-  `user_id` varchar(20) NOT NULL,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_super_admin_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -340,14 +320,11 @@ DROP TABLE IF EXISTS `universities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `universities` (
-  `university_id` char(20) NOT NULL,
+  `university_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(75) DEFAULT NULL,
-  `location_id` varchar(50) DEFAULT NULL,
   `super_admin_id` varchar(20) NOT NULL,
   PRIMARY KEY (`university_id`),
-  KEY `fk_universities_locations_location_id_idx` (`location_id`),
   KEY `fk_universities_super_admin_super_admin_id_idx` (`super_admin_id`),
-  CONSTRAINT `fk_universities_locations_location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`),
   CONSTRAINT `fk_universities_super_admin_super_admin_id` FOREIGN KEY (`super_admin_id`) REFERENCES `super_admins` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -360,7 +337,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `user_id` varchar(20) NOT NULL,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `password` varchar(100) NOT NULL,
   `name` varchar(50) NOT NULL,
   `phone` char(14) DEFAULT NULL,
