@@ -1,0 +1,181 @@
+@base=http://localhost:3000
+@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcxMjcyMzExNywiZXhwIjoxNzEyODA5NTE3fQ.LVjpDlzVBkj6JqUTY0d-4Lgw6iEc9NfesbFuxxjaCzA
+@eventId=1
+
+@rsoId=8
+@feedbackId=1
+
+### REGISTRATION #####################################################
+
+### Sign in, and (if successful) return the user's JWT token.
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "emily.white@harvard.edu",
+    "password": "correcthorsebatterystaple"
+}
+
+# example 200 OK response:
+# {
+#     "token": ""
+# }
+
+# responds with 401 Unauthorized if invalid login
+
+### Register new user, and return the newly minted JWT token.
+POST {{base}}/auth/register
+Content-Type: application/json
+
+{
+    "password": "hunter2",
+    "name": "Juni Yeom",
+    "phone": "2569757893", 
+    "email": "juni.yeom@ucf.edu", 
+    "university_id": "1"
+}
+
+# example 201 Created response:
+# {
+#     "token": ""
+# }
+
+# responds with 409 Conflict if user with same email already exists
+# responds with 400 Bad Request if email/phone/password not valid, or if university_id does not exist
+
+
+### EVENTS #####################################################
+
+### Given a user('s JWT token), get their events, including Ratings for each event.
+GET {{base}}/events
+Authorization: Bearer {{jwtToken}}
+
+# example 200 OK response:
+# {
+#     "events": [
+#         {
+#             "event_id": "234235",
+#             "rating": 6,
+            # "tags": ["This", "will", "be", "encoded", "as", "a", "string", "in", "the", "database", "using JSON.stringify()"],
+            # "title": "Juggling for Dummies",
+            # "category": "Juggling",
+            # "description": "Tired of your friends and family disrespecting you for your utter lack of juggling skills? No longer. Attend this one-in-a-life time seminar and then they'll see. They'll ALL SEE. Your newfound juggling prowess, that is.",
+            # "start_time": "Mon, 08 Apr 2024 15:00:00 -0400", // encoded using "date-and-time" npm package,
+            # "end_time": "Mon, 08 Apr 2024 17:00:00 -0400", // using the "ddd, DD MMM YYYY HH:mm:ss Z" format string
+            # "location_id": "ChIJpWQOoGZo54gRX0K6_CmyVe8", // encoded using Google Maps Place API on client side.
+            # "contact_name": "Rick Rickinator",
+            # "contact_email": "rinator@gmail.com",
+            # "contact_phone": "2531324821",
+#         },
+#         {
+#             ...more events
+#         },
+#     ]
+# }
+
+
+
+### Create a new event
+POST {{base}}/events
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json
+
+{
+    "tags": ["This", "will", "be", "encoded", "as", "a", "string", "in", "the", "database", "using JSON.stringify()"],
+    "title": "Juggling for Dummies",
+    "category": "Juggling",
+    "description": "Tired of your friends and family disrespecting you for your utter lack of juggling skills? No longer. Attend this one-in-a-life time seminar and then they'll see. They'll ALL SEE. Your newfound juggling prowess, that is.",
+    "start_time": "Mon, 08 Apr 2024 15:00:00 -0400",
+    "end_time": "Mon, 08 Apr 2024 17:00:00 -0400",
+    "location_id": "ChIJpWQOoGZo54gRX0K6_CmyVe8",
+    "contact_name": "Rick Rickinator",
+    "contact_email": "rinator@gmail.com",
+    "contact_phone": "2531324821"
+}
+
+# returns 201 Created if successful
+# returns 400 Bad Request if invalid 
+
+
+### RSO MANAGEMENT #####################################################
+
+### Create a new RSO, after verifying that the user is an admin.
+POST {{base}}/rsos
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json
+
+{
+    "name": "Juggling Club"
+}
+
+# returns 201 Created if successful
+
+### Join an RSO.
+POST {{base}}/rsos/{{rsoId}}/join
+Authorization: Bearer {{jwtToken}}
+
+# returns 201 Created if successful
+
+### Leave an RSO.
+POST {{base}}/rsos/{{rsoId}}/leave
+Authorization: Bearer {{jwtToken}}
+
+# returns 201 Created if successful
+
+### FEEDBACK (COMMENTS)
+
+### Get comments for a given event
+GET {{base}}/events/{{eventId}}/comments
+
+# example 200 OK response:
+# {
+#     "comments": [
+#         {
+#             "name": "Jimmy Slippins", fetched from users table with user_id key
+#             "comment": "Did you know that you have rights?",
+#             "rating": 2,
+#             "timestamp": ""
+#         },
+#         {
+#             ...
+#         }
+#     ]
+# }
+
+### Add comment
+POST {{base}}/comments
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json
+
+{
+    "event_id": "214501",
+    "comment": "Seems cool still wont go",
+    "rating": 1
+    // user_id retrieved from token
+    // feedback_id automatically assigned
+    // timestamp automatically assigned
+}
+
+# responds 200 OK if successful
+
+### Edit comment
+PUT {{base}}/comments/{{feedbackId}}
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json
+
+{
+    "event_id": "214501",
+    "comment": "Actually seems lame (but ill go actually)",
+    "rating": 5
+    // feedback_id in URL
+    // user_id retrieved from token
+    // timestamp reassigned
+}
+
+# responds 200 OK if successful
+
+### Remove comment
+DELETE {{base}}/comments/{{feedbackId}}
+Authorization: Bearer {{jwtToken}}
+
+# responds 200 OK if successful

@@ -33,29 +33,30 @@ const normalizeFeedJson = async event => {
     address = response.data.results[0]?.formatted_address;
   }
 
-  return {
-    title: event.title,
-    description: event.description,
-    category: event.category,
-    tags: event.tags,
+  let eventObj = {
+    title: event.title, // string
+    description: event.description, // string
+    category: event.category, // string
+    tags: event.tags, //
     location: {
-      name: event.location,
-      url: event.location_url ?? event.virtual_url,
-      address
-      // TODO – Google Place API name to address
+      name: event.location, // string
+      url: event.location_url ?? event.virtual_url, // string
+      address // string
     },
     time: {
-      start: event.starts,
+      start: event.starts, //
       end: event.ends
     },
     contact: {
-      name: event.contact_name,
-      phone: event.contact_phone,
-      email: event.contact_email,
+      name: event.contact_name,  // string
+      phone: event.contact_phone, // string
+      email: event.contact_email, // string
     },
-    privacy_level: "public",
-    event_id: event.event_id
+    privacy_level: "public", // string
+    event_id: event.event_id // 
   };
+  console.log(eventObj)
+  return eventObj;
 }
 
 export default fetchEvents;
