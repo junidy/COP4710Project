@@ -1,0 +1,5 @@
+.custom-datepicker .mantine-DatePicker-calendarHeaderControl {
+    width: 10%;
+    height: 10%;
+    padding: 0;
+}
