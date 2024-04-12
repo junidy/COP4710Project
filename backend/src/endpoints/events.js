@@ -15,7 +15,7 @@ const router = express.Router();
 const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'cop4710'
 });
 const query = promisify(db.query).bind(db);

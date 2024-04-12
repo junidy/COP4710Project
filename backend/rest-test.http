@@ -1,5 +1,5 @@
 @base=http://localhost:3000
-@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcxMjcyMzExNywiZXhwIjoxNzEyODA5NTE3fQ.LVjpDlzVBkj6JqUTY0d-4Lgw6iEc9NfesbFuxxjaCzA
+@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTcxMjk1NDc5MSwiZXhwIjoxNzEzMDQxMTkxfQ.ERaH9jQpNKQ3_mJ2eoirAo9NdbFUPhHjIu1j9rtzzOQ
 @eventId=1
 
 @rsoId=8

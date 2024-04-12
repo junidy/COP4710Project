@@ -22,7 +22,7 @@ const EventDetailModal = ({event, comments, opened, onClose}) => {
         title={<>
           <Text order={2}>{event.title}</Text>
           <Group>
-            <Text>{parseDate(event.time.start).date} from {parseDate(event.time.start).time} to {parseDate(event.time.end).time}</Text>
+            <Text>{parseDate(event.start_time).date} from {parseDate(event.start_time).time} to {parseDate(event.end_time).time}</Text>
           </Group>
           <Divider />
         </>}
@@ -40,29 +40,29 @@ const EventDetailModal = ({event, comments, opened, onClose}) => {
             <Title order={3}>Contact Info</Title>
             <Group>
               <MdPerson />
-              <Text>{event.contact.name}</Text>
+              <Text>{event.contact_name}</Text>
             </Group>
             <Group>
               <MdLocalPhone />
-              <Text>{event.contact.phone}</Text>
+              <Text>{event.contact_phone}</Text>
             </Group>
             <Group>
               <MdEmail />
-              <Text>{event.contact.email}</Text>
+              <Text>{event.contact_email}</Text>
             </Group>
             <Divider />
             <Title order={3}>Location</Title>
             <Group>
               <MdLocationPin />
-              <Text>{event.location.name}</Text>
+              <Text></Text>
             </Group>
             <Group>
               <MdLocationPin />
-              <Text>{event.location.address}</Text>
+              <Text></Text>
             </Group>
             <Group>
               <MdLink />
-              <Anchor inline={true}>{event.location.url}</Anchor>
+              <Anchor inline={true}></Anchor>
             </Group>
           </GridCol>
         <Divider />

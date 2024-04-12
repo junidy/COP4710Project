@@ -1,0 +1,8 @@
+.navbar {
+    padding: 10px 20px; /* Adjust padding to fit your content */
+    border-radius: 10px; /* Rounded corners, adjust radius as needed */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow, adjust as needed */
+    width: 90%; /* Adjust width as necessary */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    margin: 10px auto; /* Centers the navbar and adds spacing, adjust as needed */
+  }  

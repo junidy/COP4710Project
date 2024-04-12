@@ -8,6 +8,7 @@ const EventFeedPage = () => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
       fetchEvents().then(arr => setEvents(arr));
+      console.log(events);
     }, []);
     return (
       <AppShell
@@ -24,7 +25,7 @@ const EventFeedPage = () => {
           <Center>
             <Stack>
               {
-                events ? events.map(event => <EventEntry event={event} key={event.event_id} />) : null
+                events ? events?.map(event => <EventEntry event={event} key={event.event_id} />) : null
               }
             </Stack>
           </Center>
