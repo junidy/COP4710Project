@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import Navbar from "../components/Navbar/Navbar";
+import { Navbar } from "../components/Navbar/Navbar";
 import { HeroImageBackground } from "../components/HeroImageBackground/HeroImageBackground";
 import { FooterSocial } from "../components/FooterSocial/FooterSocial";
 

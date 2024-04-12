@@ -1,6 +1,5 @@
 import { RegisterTitle } from "../components/RegisterTitle/RegisterTitle";
-import Navbar from "../components/Navbar/Navbar"
-import { FooterSocial } from "../components/FooterSocial/FooterSocial";
+import { Navbar } from "../components/Navbar/Navbar";
 
 function RegisterPage()
 {
@@ -8,7 +7,6 @@ function RegisterPage()
         <div>
             <Navbar></Navbar>
             <RegisterTitle></RegisterTitle>
-            <FooterSocial></FooterSocial>
         </div>
     );
 }

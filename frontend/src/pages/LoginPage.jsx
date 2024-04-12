@@ -1,5 +1,5 @@
 import { AuthenticationTitle } from "../components/AuthenticationTitle/AuthenticationTitle";
-import Navbar from "../components/Navbar/Navbar";
+import { Navbar } from "../components/Navbar/Navbar";
 import { FooterSocial } from "../components/FooterSocial/FooterSocial";
 
 function LoginPage()
