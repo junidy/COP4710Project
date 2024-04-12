@@ -14,6 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { postLogin } from '../../utils/endpoints';
+import { getPlaceDetails } from '../../utils/placeDetails';
   
   export function AuthenticationTitle() {
     const nav = useNavigate();

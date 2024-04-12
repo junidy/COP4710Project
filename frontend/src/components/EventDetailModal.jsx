@@ -4,6 +4,7 @@ import { MdEmail, MdLocalPhone, MdPerson, MdLocationPin, MdLink,  } from 'react-
 import { Column } from '@doist/reactist';
 import date from 'date-and-time';
 import day_of_week from 'date-and-time/plugin/day-of-week';
+import { getPlaceDetails } from '../utils/placeDetails';
 date.plugin(day_of_week);
 
 const parseDate = str => {
@@ -14,6 +15,8 @@ const parseDate = str => {
 };
 
 const EventDetailModal = ({event, comments, opened, onClose}) => {
+  const location = getPlaceDetails("ChIJpWQOoGZo54gRX0K6_CmyVe8");
+  // const location = getPlaceDetails(event.location_id);
   return (
     <>
       <Modal

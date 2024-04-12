@@ -1,4 +1,3 @@
-import testEvents from '../utils/testEvents.json';
 import { AppShell, Center, Group, Stack, Text, Title } from '@mantine/core';
 import EventEntry from '../components/EventEntry';
 import fetchEvents from '../utils/fetchEvents';
@@ -8,7 +7,6 @@ const EventFeedPage = () => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
       fetchEvents().then(arr => setEvents(arr));
-      console.log(events);
     }, []);
     return (
       <AppShell
