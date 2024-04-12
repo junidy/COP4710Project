@@ -1,9 +1,9 @@
 @base=http://localhost:3000
-@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTcxMjk1NDc5MSwiZXhwIjoxNzEzMDQxMTkxfQ.ERaH9jQpNKQ3_mJ2eoirAo9NdbFUPhHjIu1j9rtzzOQ
+@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjk2MzI5MywiZXhwIjoxNzEzMDQ5NjkzfQ.TFlQor5AbxFNAQe6SLFK0Dv8y1tIDQW6RmZj0pe4mpA
 @eventId=1
 
 @rsoId=8
-@feedbackId=1
+@feedbackId=7
 
 ### REGISTRATION #####################################################
 
@@ -88,7 +88,8 @@ Content-Type: application/json
     "description": "Tired of your friends and family disrespecting you for your utter lack of juggling skills? No longer. Attend this one-in-a-life time seminar and then they'll see. They'll ALL SEE. Your newfound juggling prowess, that is.",
     "start_time": "Mon, 08 Apr 2024 15:00:00 -0400",
     "end_time": "Mon, 08 Apr 2024 17:00:00 -0400",
-    "location_id": "ChIJpWQOoGZo54gRX0K6_CmyVe8",
+    "location_name": "Juggling Center",
+    "address": "1 Broadway Ave",
     "contact_name": "Rick Rickinator",
     "contact_email": "rinator@gmail.com",
     "contact_phone": "2531324821"
@@ -99,6 +100,9 @@ Content-Type: application/json
 
 
 ### RSO MANAGEMENT #####################################################
+
+### Get all RSOs's names and ids.
+GET {{base}}/rsos
 
 ### Create a new RSO, after verifying that the user is an admin.
 POST {{base}}/rsos
@@ -125,8 +129,9 @@ Authorization: Bearer {{jwtToken}}
 
 ### FEEDBACK (COMMENTS)
 
+
 ### Get comments for a given event
-GET {{base}}/events/{{eventId}}/comments
+GET {{base}}/comments/{{eventId}}
 
 # example 200 OK response:
 # {
@@ -149,9 +154,9 @@ Authorization: Bearer {{jwtToken}}
 Content-Type: application/json
 
 {
-    "event_id": "214501",
+    "event_id": "1",
     "comment": "Seems cool still wont go",
-    "rating": 1
+    "rating": 5
     // user_id retrieved from token
     // feedback_id automatically assigned
     // timestamp automatically assigned
@@ -165,7 +170,7 @@ Authorization: Bearer {{jwtToken}}
 Content-Type: application/json
 
 {
-    "event_id": "214501",
+    "event_id": "1",
     "comment": "Actually seems lame (but ill go actually)",
     "rating": 5
     // feedback_id in URL

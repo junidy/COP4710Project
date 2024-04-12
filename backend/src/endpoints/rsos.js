@@ -42,6 +42,17 @@ const isAdmin = async (req, res, next) => {
   }
 };
 
+// Get all RSOs
+router.get('/', async (req, res) => {
+  try {
+    const rsos = await query('SELECT name, rso_id FROM rsos');
+    res.status(200).json(rsos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Create a new RSO
 router.post('/', verifyToken, isAdmin, async (req, res) => {
   const { name } = req.body;

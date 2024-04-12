@@ -52,7 +52,7 @@ INSERT INTO `events` (`creator_id`, `tags`, `title`, `category`, `description`, 
 -- Feedback for Events
 INSERT INTO `feedback` (`event_id`, `user_id`, `comment`, `rating`, `timestamp`) VALUES 
 ('1', '7', 'Incredible event with lots of learning!', 5, '2024-03-15 18:00:00'),
-('2', '8', 'Very informative workshop. Loved it!', 5, '2024-04-20 13:00:00');
+('1', '8', 'Very informative workshop. Loved it!', 5, '2024-04-20 13:00:00');
 
 
 -- Reenable foreign key constaints

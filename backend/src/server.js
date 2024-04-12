@@ -5,7 +5,7 @@ import cors from 'cors';
 
 // Import routers
 import authRouter from './endpoints/auth.js';
-// import feedbackRouter from './endpoints/feedback.js';
+import commentsRouter from './endpoints/comments.js';
 import rsosRouter from './endpoints/rsos.js';
 import eventsRouter from './endpoints/events.js';
 
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // Use routers
 app.use('/auth', authRouter);
-// app.use('/feedback', feedbackRouter);
+app.use('/comments', commentsRouter);
 app.use('/rsos', rsosRouter);
 app.use('/events', eventsRouter);
 

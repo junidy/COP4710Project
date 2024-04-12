@@ -7,6 +7,8 @@ import day_of_week from 'date-and-time/plugin/day-of-week';
 import { getPlaceDetails } from '../utils/placeDetails';
 date.plugin(day_of_week);
 
+
+
 const parseDate = str => {
   return {
     date: date.transform(str, 'ddd, DD MMM YYYY HH:mm:ss Z', 'dddd, MMMM D, YYYY'),
@@ -15,7 +17,6 @@ const parseDate = str => {
 };
 
 const EventDetailModal = ({event, comments, opened, onClose}) => {
-  const location = getPlaceDetails("ChIJpWQOoGZo54gRX0K6_CmyVe8");
   // const location = getPlaceDetails(event.location_id);
   return (
     <>
