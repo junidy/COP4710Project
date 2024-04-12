@@ -4,6 +4,8 @@ import { MantineProvider } from '@mantine/core';
 import EventFeedPage from './pages/EventFeedPage'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import SplashPage from './pages/SplashPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const getSavedLogin = () => {
 
@@ -12,6 +14,15 @@ const getSavedLogin = () => {
 const getEvents = () => {
 
 }
+
+/*
+PAGES:
+"/" - homepage
+"/login" - login
+"/register" - register
+"/events" - events homepage
+"/profile" - user profile
+*/
 
 function App() {
   const router = createBrowserRouter([
@@ -23,13 +34,21 @@ function App() {
       // ],
     },
     {
+      path: "login",
+      element: <LoginPage />
+    },
+    {
+      path: "register",
+      element: <RegisterPage />
+    },
+    {
       path: "events",
       element: <EventFeedPage />,
       // loader: getEvents,
     },
   ]);
   return (
-    <MantineProvider>
+    <MantineProvider defaultColorScheme='light'>
       <RouterProvider router={router} />
     </MantineProvider>
   )
