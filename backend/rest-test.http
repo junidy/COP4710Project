@@ -1,5 +1,5 @@
 @base=http://localhost:3000
-@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcxMjcyMzExNywiZXhwIjoxNzEyODA5NTE3fQ.LVjpDlzVBkj6JqUTY0d-4Lgw6iEc9NfesbFuxxjaCzA
+@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTcxMjk1NDczNCwiZXhwIjoxNzEzMDQxMTM0fQ.TOEdtrgf_N1J9sXbPpHE0X2guJPJYctJCexUNsNhSHs
 @eventId=1
 
 @rsoId=8
@@ -32,7 +32,8 @@ Content-Type: application/json
     "name": "Juni Yeom",
     "phone": "2569757893", 
     "email": "juni.yeom@ucf.edu", 
-    "university_id": "1"
+    "university_id": "1",
+    "isAdmin": false
 }
 
 # example 201 Created response:
