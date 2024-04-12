@@ -28,10 +28,10 @@ import { DropdownMenu } from '../DropdownMenu/DropdownMenu.jsx';
         
                 <Paper withBorder shadow="md" p={30} mt={30} radius="md">
                 <TextInput label="Name" placeholder="Name" required ></TextInput>
-                <TextInput label="Email" placeholder="you@mantine.dev" required />
+                <TextInput label="Email" placeholder="hello@example.com" required />
                 <PasswordStrength></PasswordStrength>
                 <PasswordInput label="Confirm Password" placeholder="Confirm password" required mt="md" />
-                <Text>Select your university:</Text>
+                <Text size="sm">Select your university:</Text>
                 <DropdownMenu></DropdownMenu>
                 <Button fullWidth mt="xl">
                     Create account

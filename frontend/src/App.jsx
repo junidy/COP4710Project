@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import SplashPage from './pages/SplashPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ClubPage from './pages/ClubPage';
 
 const getSavedLogin = () => {
 
@@ -21,7 +22,7 @@ PAGES:
 "/login" - login
 "/register" - register
 "/events" - events homepage
-"/profile" - user profile
+"/clubs" - page for joining and creating RSOs
 */
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
       path: "events",
       element: <EventFeedPage />,
       // loader: getEvents,
+    },
+    {
+      path: "clubs",
+      element: <ClubPage />,
     },
   ]);
   return (
