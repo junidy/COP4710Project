@@ -31,7 +31,7 @@ import { DropdownMenu } from '../DropdownMenu/DropdownMenu.jsx';
                 <TextInput label="Email" placeholder="hello@example.com" required />
                 <PasswordStrength></PasswordStrength>
                 <PasswordInput label="Confirm Password" placeholder="Confirm password" required mt="md" />
-                <Text size="sm">Select your university:</Text>
+                <Text size="sm" style={{'padding-top': '10px'}}>Select your university:</Text>
                 <DropdownMenu></DropdownMenu>
                 <Button fullWidth mt="xl">
                     Create account
