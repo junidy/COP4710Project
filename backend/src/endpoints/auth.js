@@ -13,7 +13,7 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 const pool = createPool({
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'cop4710',
   waitForConnections: true,
   connectionLimit: 10,
@@ -59,7 +59,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   // Extract user information from the request body
-  const { user_id, password, name, phone, email, university_id } = req.body;
+  const { user_id, password, name, phone, email, university_id, isAdmin } = req.body;
 
   try {
     // Check if the user already exists in the database
@@ -78,6 +78,13 @@ router.post('/register', async (req, res) => {
       'INSERT INTO users (user_id, password, name, phone, email, university_id) VALUES (?, ?, ?, ?, ?, ?)',
       [user_id, hashedPassword, name, phone, email, university_id]
     );
+
+    if (isAdmin) {
+      await pool.query(
+        `INSERT INTO admins (user_id) VALUES (?)`,
+        [user_id]
+      );
+    }
 
     if (result[0].affectedRows === 1) {
       const token = jwt.sign({ userId: user_id }, jwtSecretKey, { expiresIn: '24h' });

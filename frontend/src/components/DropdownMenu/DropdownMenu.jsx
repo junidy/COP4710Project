@@ -4,11 +4,12 @@ import { IconChevronDown } from '@tabler/icons-react';
 import classes from './DropdownMenu.module.css';
 
 const data = [
-  { label: 'University of Central Florida'},
-  { label: 'Harvard University'},
+  { label: 'University of Central Florida', id: '1'},
+  { label: 'Harvard University', id: '2'},
 ];
 
 export function DropdownMenu() {
+  const handleChange = (e) => {console.log(e)}
   const [opened, setOpened] = useState(false);
   const [selected, setSelected] = useState(data[0]);
   const items = data.map((item) => (
@@ -25,6 +26,7 @@ export function DropdownMenu() {
     <Menu
       onOpen={() => setOpened(true)}
       onClose={() => setOpened(false)}
+      onChange={handleChange}
       radius="md"
       width="target"
       withinPortal
