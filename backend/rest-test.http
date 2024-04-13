@@ -1,5 +1,5 @@
 @base=http://localhost:3000
-@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMjk2MzI5MywiZXhwIjoxNzEzMDQ5NjkzfQ.TFlQor5AbxFNAQe6SLFK0Dv8y1tIDQW6RmZj0pe4mpA
+@jwtToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTcxMjk2OTUyNCwiZXhwIjoxNzEzMDU1OTI0fQ.-3fzq2KmhBwMngqE7ZCw504D0Q7CCiWlGp4IWVtWrD0
 @eventId=1
 
 @rsoId=8
@@ -103,6 +103,7 @@ Content-Type: application/json
 
 ### Get all RSOs's names and ids.
 GET {{base}}/rsos
+Authorization: Bearer {{jwtToken}}
 
 ### Create a new RSO, after verifying that the user is an admin.
 POST {{base}}/rsos

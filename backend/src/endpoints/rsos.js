@@ -10,7 +10,7 @@ const router = express.Router();
 const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'cop4710'
 });
 const query = promisify(db.query).bind(db);
@@ -42,16 +42,45 @@ const isAdmin = async (req, res, next) => {
   }
 };
 
-// Get all RSOs
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
+  const userId = jwt.verify(req.token, process.env.JWT_SECRET_KEY).userId;
   try {
-    const rsos = await query('SELECT name, rso_id FROM rsos');
-    res.status(200).json(rsos);
+
+      // First, get the user's university_id
+      const [users] = await query(`
+          SELECT university_id FROM users WHERE user_id = ?
+      `, [userId]);
+
+      if (users.length === 0) {
+          res.status(404).json({ message: "User not found" });
+          await conn.end();
+          return;
+      }
+
+      const universityId = users.university_id;
+
+      // Next, fetch all RSOs from the user's university and whether the user is a member
+      const rsos = await query(`
+          SELECT rsos.rso_id, rsos.name,
+                 EXISTS(SELECT 1 FROM rso_members WHERE rso_members.rso_id = rsos.rso_id AND rso_members.member_id = ?) AS is_member
+          FROM rsos
+          WHERE EXISTS (SELECT 1 FROM users WHERE users.user_id = rsos.admin_id AND users.university_id = ?)
+      `, [userId, universityId]);
+
+      // Format the response as JSON
+      const formattedRsos = rsos.map(rso => ({
+          rso_id: rso.rso_id,
+          name: rso.name,
+          is_member: !!rso.is_member // convert the number to a boolean
+      }));
+
+      res.json(formattedRsos);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+      console.error('Failed to query RSOs:', error);
+      res.status(500).json({ message: "Failed to retrieve RSO information" });
   }
 });
+
 
 // Create a new RSO
 router.post('/', verifyToken, isAdmin, async (req, res) => {

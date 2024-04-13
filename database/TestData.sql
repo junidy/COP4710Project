@@ -35,7 +35,7 @@ INSERT INTO `users` (`name`, `password`, `phone`, `email`, `university_id`) VALU
 
 -- Insert Admins into `admins` table
 INSERT INTO `admins` (`user_id`) VALUES
-(1), (2), (3), (4);
+(1), (2), (3), (4), (5), (6);
 
 -- RSOs for UCF and Harvard
 INSERT INTO `rsos` (`admin_id`, `name`) VALUES 
