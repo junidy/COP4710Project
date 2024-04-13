@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, TextInput, Textarea, Group, Select } from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates'; // Corrected import
 import './CreateEventButton.module.css';
+import { postEvent } from '../../utils/endpoints';
 
 const CreateEventButton = () => {
   const [modalOpened, setModalOpened] = useState(false);
@@ -35,9 +36,20 @@ const CreateEventButton = () => {
   };
 
   const handleSubmit = () => {
-    console.log('Event Data:', eventData);
-    setModalOpened(false);  // Assume successful handling and close modal
+    const token = sessionStorage.getItem('token');
+  
+    // Correctly format the start_time and end_time
+    const formattedEventData = {
+      ...eventData,
+      start_time: eventData.start_time.toISOString(), // Format the datetime as ISO string
+      end_time: eventData.end_time.toISOString(),
+    };
+  
+    console.log(formattedEventData);
+    // postEvent(formattedEventData, token);
+    setModalOpened(false);  // Close modal after submission
   };
+  
 
   return (
     <div style={{'padding-top': '10px'}}>
