@@ -11,8 +11,8 @@ date.plugin(day_of_week);
 
 const parseDate = str => {
   return {
-    date: date.transform(str, 'ddd, DD MMM YYYY HH:mm:ss Z', 'dddd, MMMM D, YYYY'),
-    time: date.transform(str, 'ddd, DD MMM YYYY HH:mm:ss Z', 'h:mm A'),
+    date: date.transform(str, 'YYYY-MM-DDTHH:mm:ss.SSSZ', 'dddd, MMMM D, YYYY'),
+    time: date.transform(str, 'YYYY-MM-DDTHH:mm:ss.SSSZ', 'h:mm A'),
   };
 };
 
