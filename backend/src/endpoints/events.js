@@ -41,21 +41,26 @@ router.get('/', verifyToken, async (req, res) => {
     
     // Assuming events are directly related to a user (adjust SQL as needed)
     const events = await query(`
-      SELECT DISTINCT e.* 
-      FROM events e
-      LEFT JOIN private_events pe ON e.event_id = pe.event_id
-      LEFT JOIN rso_events re ON e.event_id = re.event_id
-      LEFT JOIN rso_members rm ON re.rso_id = rm.rso_id
-      INNER JOIN users u ON u.user_id = ?
-      LEFT JOIN super_admins sa ON u.user_id = sa.user_id
-      WHERE sa.user_id IS NULL 
-        AND (
-          e.event_id IN (SELECT event_id FROM public_events)
-          OR 
-          (pe.university_id = u.university_id AND pe.university_id IS NOT NULL)
-          OR 
-          (rm.member_id = u.user_id AND rm.member_id IS NOT NULL)
-        )
+    SELECT DISTINCT e.*
+FROM events e
+LEFT JOIN private_events pe ON e.event_id = pe.event_id
+LEFT JOIN rso_events re ON e.event_id = re.event_id
+LEFT JOIN rso_members rm ON re.rso_id = rm.rso_id AND rm.member_id = @user_id
+LEFT JOIN users u ON u.user_id = @user_id
+WHERE
+    e.event_id IN (
+        SELECT event_id FROM events
+        WHERE event_id NOT IN (SELECT event_id FROM private_events)
+        AND event_id NOT IN (SELECT event_id FROM rso_events)
+    )
+    OR (
+        pe.university_id = u.university_id
+    )
+    OR (
+        rm.member_id = @user_id
+    )
+;
+
     `, [user_id]);
     
     const response = {
