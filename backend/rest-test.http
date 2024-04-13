@@ -103,6 +103,7 @@ Content-Type: application/json
 
 ### Get all RSOs's names and ids.
 GET {{base}}/rsos
+Authorization: Bearer {{jwtToken}}
 
 ### Create a new RSO, after verifying that the user is an admin.
 POST {{base}}/rsos

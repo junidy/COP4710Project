@@ -1,6 +1,8 @@
 import axios from 'axios';
-const token = sessionStorage.getItem('token');
 const base = import.meta.env.PROD
+  ? ''
+  : 'http://localhost:3000'
+const url = import.meta.env.PROD
   ? ''
   : 'http://localhost:3000'
 
@@ -126,9 +128,8 @@ export {
   createRSO,
   joinRSO,
   leaveRSO,
-  addComment,
   getComments,
+  addComment,
   editComment,
-  removeComment,
-  fetchEvents
+  removeComment
 };
