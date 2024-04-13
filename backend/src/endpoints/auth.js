@@ -13,7 +13,7 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 const pool = createPool({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'cop4710',
   waitForConnections: true,
   connectionLimit: 10,

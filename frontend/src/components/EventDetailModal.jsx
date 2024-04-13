@@ -5,6 +5,7 @@ import { Column } from '@doist/reactist';
 import date from 'date-and-time';
 import day_of_week from 'date-and-time/plugin/day-of-week';
 import { getPlaceDetails } from '../utils/placeDetails';
+import CommentCard from './CommentCard';
 date.plugin(day_of_week);
 
 

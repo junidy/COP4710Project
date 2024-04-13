@@ -36,7 +36,7 @@ import { getPlaceDetails } from '../../utils/placeDetails';
             .then(token => {
                 console.log(token);
                 sessionStorage.setItem('token', token);
-                nav('../events');
+                nav('/');
             })
             .catch(error => setErrorMsg(error.toString()));
     }
