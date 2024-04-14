@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `admins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admins` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_admin_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -46,14 +46,15 @@ CREATE TABLE `events` (
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
   `location_id` varchar(50) NOT NULL,
-  `location_id` varchar(50) NOT NULL,
   `contact_name` varchar(50) NOT NULL,
   `contact_phone` varchar(14) NOT NULL,
   `contact_email` varchar(75) NOT NULL,
   PRIMARY KEY (`event_id`),
   UNIQUE KEY `event_id_UNIQUE` (`event_id`),
   KEY `fk_events_users_creator_id_idx` (`creator_id`),
-  CONSTRAINT `fk_events_users_creator_id` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `fk_events_users_creator_id` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`),
+  KEY `fk_events_locations_location_id_idx` (`location_id`),
+  CONSTRAINT `fk_events_locations_location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
