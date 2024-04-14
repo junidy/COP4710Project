@@ -75,6 +75,14 @@ const leaveRSO = (rsoId, jwtToken) => {
     .then(response => response.data)
     .catch(error => console.error('Leaving RSO Failed:', error.response));
 };
+
+// Get all university names
+const getUniversities = () => {
+  return axios.get(`${base}/universities`)
+    .then(response => response.data)
+    .catch(error => console.error('Fetching Universities Failed:', error.response));
+};
+
 // Get Comments for an Event
 const getComments = (eventId) => {
   return axios.get(`${base}/comments/${eventId}`)
@@ -128,6 +136,7 @@ export {
   createRSO,
   joinRSO,
   leaveRSO,
+  getUniversities,
   getComments,
   addComment,
   editComment,
