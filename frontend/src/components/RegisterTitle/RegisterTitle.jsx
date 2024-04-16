@@ -65,7 +65,7 @@ export function RegisterTitle() {
                 </Title>
                 <Text c="dimmed" size="sm" ta="center" mt={5}>
                     Already have an account?{' '}
-                    <Anchor size="sm" component="button">
+                    <Anchor size="sm" component="button" onClick={() => nav('/login')}>
                         Sign in
                     </Anchor>
                 </Text>
