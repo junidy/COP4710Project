@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import { Card, Text, Button, Group } from '@mantine/core';
+import joinRSO from '../utils/joinRSO';
+import leaveRSO from '../utils/leaveRSO';
 
-const ClubCard = ({ clubName, initialJoined = false }) => {
+const ClubCard = ({ clubName, clubID, initialJoined = false }) => {
   // Manage the joined state with useState
   const [hasJoined, setHasJoined] = useState(initialJoined);
 
   // Toggle the joined state
   const toggleJoin = () => {
-    setHasJoined(!hasJoined);
+    if (hasJoined)
+    {
+      leaveRSO(clubID);
+      setHasJoined(false);
+    }
+    else
+    {
+      joinRSO(clubID);
+      setHasJoined(true);
+    }
   };
 
   return (
