@@ -46,7 +46,7 @@ const CreateEventButton = () => {
     };
   
     console.log(formattedEventData);
-    // postEvent(formattedEventData, token);
+    postEvent(formattedEventData, token);
     setModalOpened(false);  // Close modal after submission
   };
   
