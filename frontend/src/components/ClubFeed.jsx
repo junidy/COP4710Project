@@ -1,14 +1,16 @@
 import { Container, Title, Paper, Stack, Text, Center } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import fetchClubs from '../utils/fetchClubs';
 import ClubCard from './ClubCard';
 
 const ClubFeed = () =>
 {
-    const clubs = [
-        {name: "Axe Throwing Club", id: 0},
-        {name: "Clown Club", id: 1},
-        {name: "Computer Science Club", id: 2},
-        {name: "Chess Club", id: 3}
-    ];
+    const [clubs, setClubs] = useState([]);
+
+    useEffect(() => {
+        fetchClubs().then(arr => setClubs(arr) );
+    }, []);
+    
     return (
         <Container>
             <Title ta="center">Available Clubs</Title>
@@ -16,7 +18,7 @@ const ClubFeed = () =>
                 <Center>
                     <Stack>
                         {
-                            clubs ? clubs.map(club => <ClubCard clubName={club.name} hasJoined={false} key={club.id}></ClubCard>) : <Text>No clubs available</Text>
+                            clubs ? clubs.map(club => <ClubCard clubName={club.name} clubID={club.rso_id} initialJoined={club.is_member} key={club.rso_id}></ClubCard>) : <Text>No clubs available</Text>
                         }
                     </Stack>
                 </Center>
