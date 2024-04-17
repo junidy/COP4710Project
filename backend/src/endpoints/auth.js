@@ -63,7 +63,7 @@ router.post('/register', async (req, res) => {
 
   try {
     // Check if the user already exists in the database
-    const [userExists] = await pool.query('SELECT * FROM users WHERE user_id = ?', [user_id]);
+    const [userExists] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
 
     if (userExists[0]) {
       return res.status(409).json({ message: 'User already exists' });
@@ -81,8 +81,8 @@ router.post('/register', async (req, res) => {
 
     if (isAdmin) {
       await pool.query(
-        `INSERT INTO admins (user_id) VALUES (?)`,
-        [user_id]
+        `INSERT INTO admins (user_id) VALUES (SELECT email FROM users WHERE email = ?)`,
+        [email]
       );
     }
 
@@ -98,5 +98,21 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/id', async (req, res) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, jwtSecretKey, (err, user) => {
+      if (err) return res.sendStatus(403);
+      res.json({ user_id: user.userId });
+    });
+  } catch (error) {
+    console.error('User ID error:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving user ID' });
+  }
+});
 
 export default router;

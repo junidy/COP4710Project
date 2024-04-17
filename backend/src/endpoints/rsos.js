@@ -38,6 +38,12 @@ const isAdmin = async (req, res, next) => {
       res.status(403).json({ error: 'User is not an admin' });
     }
   } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      console.error("Token expired");
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      console.error("Unauthorized or invalid token");
+    }
+
     res.status(401).json({ error: 'Unauthorized or invalid token' });
   }
 };
@@ -47,13 +53,13 @@ router.get('/', verifyToken, async (req, res) => {
   try {
 
       // First, get the user's university_id
-      const [users] = await query(`
+      const users = await query(`
           SELECT university_id FROM users WHERE user_id = ?
       `, [userId]);
 
       if (users.length === 0) {
           res.status(404).json({ message: "User not found" });
-          await conn.end();
+          //await conn.end();
           return;
       }
 
@@ -91,7 +97,11 @@ router.post('/', verifyToken, isAdmin, async (req, res) => {
   try {
     const decoded = jwt.verify(req.token, process.env.JWT_SECRET_KEY);
     await query('INSERT INTO rsos (name, admin_id, active) VALUES (?, ?, FALSE)', [name, decoded.userId]);
-    res.status(201).json({ message: 'RSO created successfully' });
+    const clubID = await query('SELECT rso_id FROM rsos WHERE admin_id = ? AND name = ?', [decoded.userId, name]);
+    res.status(201).json({
+      message: 'RSO created successfully',
+      clubID: clubID[0].rso_id
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

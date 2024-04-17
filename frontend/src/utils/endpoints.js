@@ -6,6 +6,13 @@ const url = import.meta.env.PROD
   ? ''
   : 'http://localhost:3000'
 
+const getUserId = async () => {
+  const creds = sessionStorage.getItem('token');
+  return await axios.get(`${base}/auth/id`, {
+    headers: {Authorization: `Bearer ${creds}`}
+  })
+}
+
 const postLogin = (creds) => {
   return axios.post(`${base}/auth/login`, creds)
     .then(response => {
@@ -128,6 +135,7 @@ const fetchEvents = () => {
 }
 
 export {
+  getUserId,
   postLogin,
   postRegister,
   getEvents,

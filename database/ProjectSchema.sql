@@ -293,6 +293,7 @@ CREATE TABLE `rsos` (
   `rso_id` int NOT NULL AUTO_INCREMENT,
   `admin_id` int NOT NULL,
   `name` varchar(50) NOT NULL,
+  `active` BOOLEAN DEFAULT false NOT NULL,
   PRIMARY KEY (`rso_id`),
   UNIQUE KEY `rso_id_UNIQUE` (`rso_id`),
   KEY `fk_rsos_admins_admin_id_idx` (`admin_id`),
@@ -323,7 +324,7 @@ DROP TABLE IF EXISTS `universities`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `universities` (
   `university_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(75) DEFAULT NOT NULL UNIQUE,
+  `name` varchar(75) NOT NULL UNIQUE,
   `super_admin_id` int NOT NULL,
   PRIMARY KEY (`university_id`),
   KEY `fk_universities_super_admin_super_admin_id_idx` (`super_admin_id`),
@@ -343,7 +344,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `name` varchar(50) NOT NULL,
   `phone` char(14) DEFAULT NULL,
-  `email` varchar(75) DEFAULT NULL,
+  `email` varchar(75) NOT NULL UNIQUE,
   `university_id` int NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `userID_UNIQUE` (`user_id`),
