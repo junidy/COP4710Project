@@ -13,6 +13,13 @@ const getUserId = async () => {
   })
 }
 
+const getIsAdmin = async () => {
+  const creds = sessionStorage.getItem('token');
+  return await axios.get(`${base}/auth/isAdmin`, {
+    headers: {Authorization: `Bearer ${creds}`}
+  })
+}
+
 const postLogin = (creds) => {
   return axios.post(`${base}/auth/login`, creds)
     .then(response => {
@@ -136,6 +143,7 @@ const fetchEvents = () => {
 
 export {
   getUserId,
+  getIsAdmin,
   postLogin,
   postRegister,
   getEvents,
