@@ -1,19 +1,19 @@
 -- Disable foreign key constaints
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Super Admins
-INSERT INTO `users` (`name`, `password`, `phone`, `email`, `university_id`) VALUES 
-('John Doe', 'encrypted_password', '321-321-4321', 'john.doe@ucf.edu', NULL),
-('Jane Smith', 'encrypted_password', '617-617-7617', 'jane.smith@harvard.edu', NULL);
-
 INSERT INTO `super_admins` (`user_id`) VALUES
-(LAST_INSERT_ID() - 1),
-(LAST_INSERT_ID());
+(1),
+(2);
 
 -- Universities
 INSERT INTO `universities` (`name`, `super_admin_id`) VALUES 
 ('University of Central Florida', '1'),
 ('Harvard University', '2');
+
+-- Super Admins
+INSERT INTO `users` (`name`, `password`, `phone`, `email`, `university_id`) VALUES 
+('John Doe', 'encrypted_password', '321-321-4321', 'john.doe@ucf.edu', '1'),
+('Jane Smith', 'encrypted_password', '617-617-7617', 'jane.smith@harvard.edu', '2');
 
 -- Admins
 INSERT INTO `users` (`name`, `password`, `phone`, `email`, `university_id`) VALUES 
