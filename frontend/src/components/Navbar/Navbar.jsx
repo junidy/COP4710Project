@@ -8,9 +8,9 @@ export function Navbar() {
   const nav = useNavigate();
 
   return (
-    <Box pb={120}>
+    <Box pb={0} m={12} >
       <header className={classes.header}>
-        <Text size="md" style={{ flex: 1 }}>ClubHub</Text>
+        <Text fw={700} size="1.5em" style={{ flex: 1 }}>ClubHub</Text>
 
         <Group visibleFrom='sm' h='100%' gap={0}>
           <Center> {/* Centered links */}

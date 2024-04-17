@@ -323,7 +323,7 @@ DROP TABLE IF EXISTS `universities`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `universities` (
   `university_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(75) DEFAULT NOT NULL UNIQUE,
+  `name` varchar(75) NOT NULL UNIQUE,
   `super_admin_id` int NOT NULL,
   PRIMARY KEY (`university_id`),
   KEY `fk_universities_super_admin_super_admin_id_idx` (`super_admin_id`),
