@@ -67,6 +67,8 @@ WHERE
     const response = {
       events: events.map(event => ({
         ...event,
+        start_time: start_time.toIsoString(),
+        end_time: end_time.toIsoString(),
         tags: JSON.parse(event.tags) // Assuming tags are stored as JSON strings
       }))
     };
