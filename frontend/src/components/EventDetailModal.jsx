@@ -11,9 +11,10 @@ import { useState, useEffect } from 'react';
 date.plugin(day_of_week);
 
 const parseDate = str => {
+  const dt = new Date(str)
   return {
-    date: date.transform(str, 'YYYY-MM-DDTHH:mm:ss.SSSZ', 'dddd, MMMM D, YYYY'),
-    time: date.transform(str, 'YYYY-MM-DDTHH:mm:ss.SSSZ', 'h:mm A'),
+    date: date.format(dt, 'ddd, MMM DD, YYYY'),
+    time: date.format(dt, 'h:mm A'),
   };
 };
 
