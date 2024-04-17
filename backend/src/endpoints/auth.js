@@ -63,7 +63,7 @@ router.post('/register', async (req, res) => {
 
   try {
     // Check if the user already exists in the database
-    const [userExists] = await pool.query('SELECT * FROM users WHERE user_id = ?', [user_id]);
+    const [userExists] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
 
     if (userExists[0]) {
       return res.status(409).json({ message: 'User already exists' });
@@ -81,8 +81,8 @@ router.post('/register', async (req, res) => {
 
     if (isAdmin) {
       await pool.query(
-        `INSERT INTO admins (user_id) VALUES (?)`,
-        [user_id]
+        `INSERT INTO admins (user_id) VALUES (SELECT email FROM users WHERE email = ?)`,
+        [email]
       );
     }
 
