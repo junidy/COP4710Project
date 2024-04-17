@@ -63,7 +63,7 @@ router.get('/', verifyToken, async (req, res) => {
           return;
       }
 
-      const universityId = users.university_id;
+      const universityId = users[0].university_id;
 
       // Next, fetch all RSOs from the user's university and whether the user is a member
       const rsos = await query(`
