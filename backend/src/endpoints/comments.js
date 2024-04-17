@@ -37,7 +37,7 @@ router.get('/:eventId', async (req, res) => {
   try {
     const { eventId } = req.params;
     const query = `
-      SELECT u.name, f.comment, f.rating, f.timestamp, f.feedback_id
+      SELECT u.name, f.user_id, f.comment, f.rating, f.timestamp, f.feedback_id
       FROM feedback f
       JOIN users u ON f.user_id = u.user_id
       WHERE f.event_id = ?

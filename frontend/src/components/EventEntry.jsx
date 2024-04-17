@@ -6,7 +6,7 @@ import { MdChevronRight } from "react-icons/md";
 
 const EventEntry = ({event}) => {
   const [opened, { open, close }] = useDisclosure(false);
-
+  console.log(event);
   return <>
     <Card
       shadow="sm"
@@ -22,8 +22,8 @@ const EventEntry = ({event}) => {
           <Title order={3}>
             {event.title}
           </Title>
+          {/* <Rating value={1} readOnly /> */}
         </Group>
-        <Rating />
       </Stack>
     </Card>
     <EventDetailModal

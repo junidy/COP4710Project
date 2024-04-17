@@ -98,5 +98,21 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/id', async (req, res) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, jwtSecretKey, (err, user) => {
+      if (err) return res.sendStatus(403);
+      res.json({ user_id: user.userId });
+    });
+  } catch (error) {
+    console.error('User ID error:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving user ID' });
+  }
+});
 
 export default router;
