@@ -11,10 +11,10 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 // Create a MySQL pool connection
 const pool = createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'cop4710',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: process.env.DB_NAME || 'cop4710',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

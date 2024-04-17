@@ -13,10 +13,11 @@ dotenv.config();
 
 const router = express.Router();
 const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'cop4710'
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASS || 'password',
+  database: process.env.DB_NAME || 'cop4710'
 });
 const query = promisify(db.query).bind(db);
 

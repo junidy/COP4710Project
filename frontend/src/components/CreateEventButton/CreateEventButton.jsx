@@ -52,7 +52,7 @@ const CreateEventButton = () => {
   
 
   return (
-    <div style={{'padding-top': '10px'}}>
+    <div style={{'paddingTop': '10px'}}>
       <Button onClick={() => setModalOpened(true)}>Create Event</Button>
       <Modal
         opened={modalOpened}

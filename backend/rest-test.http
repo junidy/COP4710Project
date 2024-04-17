@@ -186,3 +186,10 @@ DELETE {{base}}/comments/{{feedbackId}}
 Authorization: Bearer {{jwtToken}}
 
 # responds 200 OK if successful
+
+### UNIVERSITIES #####################################################
+
+### Get list of all universities
+GET {{base}}/universities
+
+# responds 200 OK if successful

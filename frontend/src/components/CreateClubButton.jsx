@@ -12,7 +12,7 @@ const CreateClubButton = () => {
     };
   
     return (
-      <div style={{ 'padding-top': '15px' }}>
+      <div style={{ 'paddingTop': '15px' }}>
         <Button onClick={() => setModalOpened(true)}>Create Club</Button>
         <Modal
           opened={modalOpened}

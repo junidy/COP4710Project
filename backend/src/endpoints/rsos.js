@@ -8,10 +8,10 @@ dotenv.config();
 
 const router = express.Router();
 const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'cop4710'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: process.env.DB_NAME || 'cop4710'
 });
 const query = promisify(db.query).bind(db);
 
