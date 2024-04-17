@@ -65,7 +65,7 @@ export function AuthenticationTitle() {
                 </Text>
 
                 <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-                    <TextInput value={creds.email} onChange={handleChange} label="Email" placeholder="you@mantine.dev" name="email" required />
+                    <TextInput value={creds.email} onChange={handleChange} label="Email" placeholder="hello@example.com" name="email" required />
                     <PasswordInput value={creds.password} onChange={handleChange} label="Password" placeholder="Your password" name="password" required mt="md" />
                     {/* <PasswordInput label="Password" placeholder="Your password" required mt="md" /> */}
                     <Group justify="space-between" mt="lg">

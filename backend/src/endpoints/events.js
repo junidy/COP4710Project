@@ -21,6 +21,22 @@ const db = mysql.createPool({
 });
 const query = promisify(db.query).bind(db);
 
+// Convert the dates correctly
+function convertDate(dateStr) {
+  try {
+      // Parsing the ISO date string into a Date object
+      const parsedDate = new Date(dateStr);
+      if (isNaN(parsedDate)) throw new Error('Invalid date provided');
+
+      // Formatting the date into the required format
+      const formattedDate = date.format(parsedDate, 'DD MM YYYY HH mm ss');
+      return formattedDate;
+  } catch (err) {
+      console.error('Date conversion error:', err);
+      return null; // or handle error accordingly
+  }
+}
+
 // Middleware to verify token and set user_id in req.user
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -90,8 +106,8 @@ router.post('/', verifyToken, async (req, res) => {
 
   try {
     const tagsString = JSON.stringify(tags); // Assuming tags are to be stored as a string
-    const startString = date.transform(start_time, 'DD MM YYYY HH mm ss');
-    const endString = date.transform(end_time, 'DD MM YYYY HH mm ss');
+    const startString = convertDate(start_time);
+    const endString = convertDate(end_time);
 
     await query(`
       INSERT INTO events (creator_id, tags, title, category, description, start_time, end_time, location_id, contact_name, contact_email, contact_phone)
