@@ -67,6 +67,8 @@ WHERE
     const response = {
       events: events.map(event => ({
         ...event,
+        start_time: start_time.toIsoString(),
+        end_time: end_time.toIsoString(),
         tags: JSON.parse(event.tags) // Assuming tags are stored as JSON strings
       }))
     };
@@ -88,8 +90,8 @@ router.post('/', verifyToken, async (req, res) => {
 
   try {
     const tagsString = JSON.stringify(tags); // Assuming tags are to be stored as a string
-    const startString = date.transform(start_time, 'ddd, DD MMM YYYY HH:mm:ss Z', 'DD MM YYYY HH mm ss');
-    const endString = date.transform(end_time, 'ddd, DD MMM YYYY HH:mm:ss Z', 'DD MM YYYY HH mm ss');
+    const startString = date.transform(start_time, 'YYYY-MM-DDTHH:mm:ss.sssZ', 'DD MM YYYY HH mm ss');
+    const endString = date.transform(end_time, 'YYYY-MM-DDTHH:mm:ss.sssZ', 'DD MM YYYY HH mm ss');
 
     await query(`
       INSERT INTO events (creator_id, tags, title, category, description, start_time, end_time, location_id, contact_name, contact_email, contact_phone)
