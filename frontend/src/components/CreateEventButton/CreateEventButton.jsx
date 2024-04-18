@@ -41,6 +41,7 @@ const CreateEventButton = () => {
     // Correctly format the start_time and end_time
     const formattedEventData = {
       ...eventData,
+      tags: eventData.tags.split(',').map(tag => tag.trim()), // Split tags by comma and trim whitespace  
       start_time: eventData.start_time.toISOString(), // Format the datetime as ISO string
       end_time: eventData.end_time.toISOString(),
     };

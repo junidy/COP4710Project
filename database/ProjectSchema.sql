@@ -52,9 +52,7 @@ CREATE TABLE `events` (
   PRIMARY KEY (`event_id`),
   UNIQUE KEY `event_id_UNIQUE` (`event_id`),
   KEY `fk_events_users_creator_id_idx` (`creator_id`),
-  CONSTRAINT `fk_events_users_creator_id` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`),
-  KEY `fk_events_locations_location_id_idx` (`location_id`),
-  CONSTRAINT `fk_events_locations_location_id` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`)
+  CONSTRAINT `fk_events_users_creator_id` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -344,7 +342,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `name` varchar(50) NOT NULL,
   `phone` char(14) DEFAULT NULL,
-  `email` varchar(75) NOT NULL UNIQUE,
+  `email` varchar(75) DEFAULT NULL,
   `university_id` int NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `userID_UNIQUE` (`user_id`),
