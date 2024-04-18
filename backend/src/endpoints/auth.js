@@ -20,20 +20,6 @@ const pool = createPool({
   queueLimit: 0
 });
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    console.log(user);
-    next();
-  });
-};
-
 // Initialize router
 const router = express.Router();
 
@@ -77,7 +63,7 @@ router.post('/register', async (req, res) => {
 
   try {
     // Check if the user already exists in the database
-    const [userExists] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const [userExists] = await pool.query('SELECT * FROM users WHERE user_id = ?', [user_id]);
 
     if (userExists[0]) {
       return res.status(409).json({ message: 'User already exists' });
@@ -95,13 +81,20 @@ router.post('/register', async (req, res) => {
 
     if (isAdmin) {
       await pool.query(
-        `INSERT INTO admins (user_id) VALUES (SELECT email FROM users WHERE email = ?)`,
-        [email]
+        `INSERT INTO admins (user_id) VALUES (?)`,
+        [user_id]
       );
     }
 
+    const BOOP = await pool.query(
+      'SELECT user_id FROM users WHERE email = ?',
+      [email]
+    );
+    const userId = BOOP[0][0].user_id;
+    console.log(userId);
+
     if (result[0].affectedRows === 1) {
-      const token = jwt.sign({ userId: user_id }, jwtSecretKey, { expiresIn: '24h' });
+      const token = jwt.sign({ userId }, jwtSecretKey, { expiresIn: '24h' });
       return res.status(201).json({ token });
     } else {
       throw new Error('User could not be registered');
@@ -128,28 +121,5 @@ router.get('/id', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while retrieving user ID' });
   }
 });
-
-router.get('/isAdmin', verifyToken, async (req, res) => {
-  try {
-    const user_id = req.user.userId; // Get the user ID from verified token
-
-    // Query to check if the user is in the 'admins' table
-    const result = await pool.query(`
-      SELECT EXISTS (
-        SELECT 1 FROM admins WHERE user_id = ?
-      ) AS IsAdmin;
-    `, [user_id]);
-
-    // 'result' is expected to be an array with one object containing the IsAdmin property
-    const isAdmin = result[0][0].IsAdmin == 1;
-
-    // Send JSON response with isAdmin boolean
-    res.status(200).json({ isAdmin });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 
 export default router;
