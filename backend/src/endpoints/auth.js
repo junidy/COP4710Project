@@ -19,7 +19,19 @@ const pool = createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    console.log(user);
+    next();
+  });
+};
 // Initialize router
 const router = express.Router();
 
@@ -102,6 +114,28 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.error('Registration error:', error);
     return res.status(500).json({ message: 'Server error during registration' });
+  }
+});
+
+router.get('/isAdmin', verifyToken, async (req, res) => {
+  try {
+    const user_id = req.user.userId; // Get the user ID from verified token
+
+    // Query to check if the user is in the 'admins' table
+    const result = await pool.query(`
+      SELECT EXISTS (
+        SELECT 1 FROM admins WHERE user_id = ?
+      ) AS IsAdmin;
+    `, [user_id]);
+
+    // 'result' is expected to be an array with one object containing the IsAdmin property
+    const isAdmin = result[0][0].IsAdmin == 1;
+
+    // Send JSON response with isAdmin boolean
+    res.status(200).json({ isAdmin });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
